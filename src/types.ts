@@ -15,7 +15,8 @@ export interface ChartPoint {
 }
 
 export interface Alarm {
+  id: string;
   name: string;
   detail: string;
-  state: "OK" | "WARNING";
+  state: "OK" | "WARNING" | "ALARM";
 }
