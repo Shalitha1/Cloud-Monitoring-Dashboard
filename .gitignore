@@ -1,1 +1,7 @@
-@Shalitha4.pem
+node_modules
+dist
+.env
+.DS_Store
+*.local
+*.pem
+npm-debug.log*
