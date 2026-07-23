@@ -145,7 +145,7 @@ npm run preview
 ## Where to make changes
 
 - `src/App.tsx` — page layout and refresh interaction
-- `src/mockData.ts` — mock instance, chart, metric and alarm data
+- `src/api.ts` — typed client for all Express monitoring endpoints
 - `src/styles.css` — dashboard styling and responsive layout
 - `src/components/` — reusable sidebar, metric-card and chart components
 - `backend/src/app.ts` — Express middleware and route registration
@@ -162,7 +162,11 @@ npm run preview
 - CPU and network history charts
 - Instance configuration details
 - Status checks and alarms
+- Loading, retry, manual refresh, and API error states
+- Automatic live refresh every 15 seconds
 - Responsive desktop and mobile layouts
 
-The next development step is to replace the frontend imports from
-`src/mockData.ts` with API requests to these Express endpoints.
+The frontend now loads system information, instance identity, metric summaries,
+rolling history, and alarms from Express. During development these requests use
+Vite's `/api` proxy. In production, Nginx will forward the same paths to the
+backend, so no frontend API URL needs to change.
