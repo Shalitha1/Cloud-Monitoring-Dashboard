@@ -136,6 +136,40 @@ cd backend
 npm start
 ```
 
+You can build both applications sequentially with:
+
+```bash
+npm run build:production
+```
+
+### Small EC2 installation
+
+The source repository and compiled application are small. Most local project
+space is used by frontend and backend development dependencies. On a small EC2
+instance, install everything, build, and then remove packages that are not
+needed at runtime:
+
+```bash
+cd /home/ubuntu/ec2-monitor
+npm ci
+npm --prefix backend ci
+npm run build:production
+npm --prefix backend prune --omit=dev
+```
+
+After copying `dist/` to `/var/www/html`, the root `node_modules` directory is
+not required by Nginx or Express. To keep the full Git codebase but recover that
+space, remove only its contents:
+
+```bash
+find /home/ubuntu/ec2-monitor/node_modules \
+  -mindepth 1 -maxdepth 1 -exec rm -rf -- {} +
+```
+
+The next deployment's `npm ci` recreates those frontend build dependencies.
+Do not remove `backend/node_modules`; its production dependencies are required
+by Express.
+
 To preview that build locally:
 
 ```bash
